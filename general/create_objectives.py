@@ -178,9 +178,7 @@ def add_objective(obj, case, plan, beamset,
     # UniformityConstraint?
 
     # Find current Beamset Number and determine plan optimization
-    OptIndex = 0
     indices = []
-    IndexNotFound = True
     for OptIndex, opts in enumerate(plan.PlanOptimizations):
         try:
             opts.OptimizedBeamSets[beamset.DicomPlanLabel]
@@ -189,7 +187,21 @@ def add_objective(obj, case, plan, beamset,
             template = "An exception of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(ex).__name__, ex.args)
             logging.debug(message)
-    OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
+    if len(indices) > 1:
+        logging.warning("Beamset has multiple optimizations, cannot proceed")
+        sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
+    elif len(indices) == 0:
+        logging.warning(" Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
+        sys.exit("Could not find beamset optimization")
+    else:
+        # Found our index.  We will use a shorthand for the remainder of the code
+        OptIndex = indices[0]
+        OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
+        plan_optimization = plan.PlanOptimizations[OptIndex]
+        # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
+        logging.debug(
+            'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
+                OptIndex, OptName))
     # IndexNotFound = True
     # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
     # Because the key to the OptimizedBeamSets presupposes the user knows the PlanOptimizations index
@@ -204,16 +216,16 @@ def add_objective(obj, case, plan, beamset,
     #     except Exception:
     #         IndexNotFound = True
     #         OptIndex += 1
-    if IndexNotFound:
-        logging.warning(" Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
-        sys.exit("Could not find beamset optimization")
-    else:
-        # Found our index.  We will use a shorthand for the remainder of the code
-        plan_optimization = plan.PlanOptimizations[OptIndex]
-        # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
-        logging.debug(
-            'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
-                OptIndex, OptName))
+    # if IndexNotFound:
+    #     logging.warning(" Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
+    #     sys.exit("Could not find beamset optimization")
+    # else:
+    #     # Found our index.  We will use a shorthand for the remainder of the code
+    #     plan_optimization = plan.PlanOptimizations[OptIndex]
+    #     # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
+    #     logging.debug(
+    #         'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
+    #             OptIndex, OptName))
     # Add the objective
     try:
         o = plan_optimization.AddOptimizationFunction(FunctionType=function_type,
