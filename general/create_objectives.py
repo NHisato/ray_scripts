@@ -189,12 +189,12 @@ def add_objective(obj, case, plan, beamset,
     if len(indices) == 1:
         # Found our index.  We will use a shorthand for the remainder of the code
         OptIndex = indices[0]
-        OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
+        # OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
         plan_optimization = plan.PlanOptimizations[OptIndex]
         # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
-        logging.debug(
-            'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
-                OptIndex, OptName))
+        # logging.debug(
+        #     'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
+        #         OptIndex, OptName))
     elif len(indices) == 0:
         logging.warning("Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
         sys.exit("Could not find beamset optimization")
@@ -251,8 +251,8 @@ def add_objective(obj, case, plan, beamset,
         else:
             o.DoseFunctionParameters.DoseLevel = dose
         logging.debug("add_objective: Added objective for ROI:" +
-                      "{}, type {}, dose {}, weight {}, for beamset {}".format(
-                          roi, function_type, dose, weight, restrict_beamset))
+                      "{}, type {}, dose {}, weight {}, for beamset {} with restriction: {}".format(
+                          roi, function_type, dose, weight, beamset.DicomPlanLabel, restrict_beamset))
     except:
         logging.debug("add_objective: Failed to add objective for ROI:" +
                       " {}, type {}, dose {}, weight {}, for beamset {}".format(
