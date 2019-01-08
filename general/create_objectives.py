@@ -185,7 +185,7 @@ def add_objective(obj, case, plan, beamset,
             try:
                 opts[beamset.DicomPlanLabel]
                 IndexNotFound = False
-            except KeyError:
+            except AttributeError:
                 logging.debug("Keep on keeping on")
     OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
     #IndexNotFound = True
