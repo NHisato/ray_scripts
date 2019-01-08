@@ -75,7 +75,7 @@ def add_objective(obj, case, plan, beamset,
                 if t.HasContours():
                     roi_vol = t.GetRoiVolume()
                     volume = int(float(obj.find('volume').text) / roi_vol)
-                    logging.debug('add_objective: ROI: {} Protocol volume {} substituted with {}'.format(
+                    logging.debug('ROI: {} Protocol volume {} substituted with {}'.format(
                         obj.find('name').text, obj.find('volume').text, volume))
                     obj.find('volume').text = str(volume)
                     obj.find('volume').attrib["units"] = "%"
@@ -250,11 +250,11 @@ def add_objective(obj, case, plan, beamset,
             # For all types other than DoseFallOff, the dose is simply entered here
         else:
             o.DoseFunctionParameters.DoseLevel = dose
-        logging.debug("add_objective: Added objective for ROI:" +
+        logging.debug("Added objective for ROI: " +
                       "{}, type {}, dose {}, weight {}, for beamset {} with restriction: {}".format(
                           roi, function_type, dose, weight, beamset.DicomPlanLabel, restrict_beamset))
     except:
-        logging.debug("add_objective: Failed to add objective for ROI:" +
+        logging.debug("Failed to add objective for ROI:" +
                       " {}, type {}, dose {}, weight {}, for beamset {}".format(
                           roi, function_type, dose, weight, restrict_beamset))
 
@@ -291,7 +291,7 @@ def main():
         for o in objectives:
             o_name = o.find('name').text
             o_type = o.find('type').text
-            logging.debug("objective: {} found with type {}".format(o_name, o_type))
+            # logging.debug("objective: {} found with type {}".format(o_name, o_type))
             # TESTING ONLY - TO DO ELIMINATE THIS NEXT LINE
             # This will need to be a user supplied dose level.
             if o.find('dose').attrib['units'] == '%':
