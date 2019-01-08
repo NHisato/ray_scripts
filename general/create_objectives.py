@@ -183,7 +183,7 @@ def add_objective(obj, case, plan, beamset,
         try:
             opts.OptimizedBeamSets[beamset.DicomPlanLabel]
             indices.append(OptIndex)
-        except InvalidOperationException:
+        except AttributeError:
             pass
     # Ensure we have a unique match or exit
     if len(indices) == 1:
