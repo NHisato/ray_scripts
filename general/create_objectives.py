@@ -185,8 +185,10 @@ def add_objective(obj, case, plan, beamset,
         try:
             opts.OptimizedBeamSets[beamset.DicomPlanLabel]
             indices.append(OptIndex)
-        except KeyError:
-            logging.debug("Keep on keeping on")
+        except Exception as ex:
+            template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+            message = template.format(type(ex).__name__, ex.args)
+            logging.debug(message)
     OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
     # IndexNotFound = True
     # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
