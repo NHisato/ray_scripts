@@ -182,7 +182,7 @@ def add_objective(obj, case, plan, beamset,
     IndexNotFound = True
     while IndexNotFound:
         for OptIndex, opts in enumerate(plan.PlanOptimizations):
-            if beamset.DicomPlanLabel in opt.OptimizedBeamSets:
+            if beamset.DicomPlanLabel in opts.OptimizedBeamSets:
                 logging.debug("Key found: {}".format(OptIndex))
                 IndexNotFound = False
             else:
