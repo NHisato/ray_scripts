@@ -211,8 +211,7 @@ def add_objective(obj, case, plan, beamset,
         # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
         logging.debug(
             'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
-                OptIndex, plan_optimization.OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
-            ))
+                OptIndex, OptName))
     # Add the objective
     try:
         o = plan_optimization.AddOptimizationFunction(FunctionType=function_type,
