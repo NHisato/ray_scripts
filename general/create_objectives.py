@@ -187,6 +187,7 @@ def add_objective(obj, case, plan, beamset,
                 IndexNotFound = False
             except TypeError:
                 logging.debug("Keep on keeping on")
+                OptIndex += 1
     OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
     # IndexNotFound = True
     # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
