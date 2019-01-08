@@ -275,7 +275,10 @@ def main():
             options={'i': list(tpo.protocols.keys())},
             required=['i'])
         # Launch the dialog
-        print input_dialog.show()
+        response = input_dialog.show()
+        if response == {}:
+            status.finish('create goals was cancelled')
+            sys.exit('create goals was cancelled')
         # Link root to selected protocol ElementTree
         logging.info("Protocol selected: {}".format(
             input_dialog.values['i']))
