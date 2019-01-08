@@ -188,20 +188,20 @@ def add_objective(obj, case, plan, beamset,
             except KeyError:
                 logging.debug("Keep on keeping on")
     OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
-    IndexNotFound = True
+    #IndexNotFound = True
     # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
     # Because the key to the OptimizedBeamSets presupposes the user knows the PlanOptimizations index
     # this while loop looks for the PlanOptimizations index needed below by searching for a key
     # that matches the BeamSet DicomPlanLabel
     # This can likely be replaced with a list comprehension
-    OptIndex = 0
-    while IndexNotFound:
-        try:
-            OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
-            IndexNotFound = False
-        except Exception:
-            IndexNotFound = True
-            OptIndex += 1
+    #OptIndex = 0
+    #while IndexNotFound:
+    #    try:
+    #        OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
+    #        IndexNotFound = False
+    #    except Exception:
+    #        IndexNotFound = True
+    #        OptIndex += 1
     if IndexNotFound:
         logging.warning(" Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
         sys.exit("Could not find beamset optimization")
