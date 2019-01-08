@@ -183,7 +183,7 @@ def add_objective(obj, case, plan, beamset,
         try:
             opts.OptimizedBeamSets[beamset.DicomPlanLabel]
             indices.append(OptIndex)
-        except Exception as ex:
+        except InvalidOperationException:
             template = "An exception of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(ex).__name__, ex.args)
             logging.debug(message)
