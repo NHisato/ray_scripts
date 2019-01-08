@@ -182,7 +182,7 @@ def add_objective(obj, case, plan, beamset,
     IndexNotFound = True
     while IndexNotFound:
         for OptIndex, opts in enumerate(plan.PlanOptimizations):
-            if beamset.DicomPlanLabel in opts.OptimizedBeamSets:
+            if beamset.DicomPlanLabel in opts.OptimizedBeamSets.DicomPlanLabel:
                 logging.debug("Key found: {}".format(OptIndex))
                 IndexNotFound = False
             else:
@@ -280,6 +280,7 @@ def main():
             o_type = o.find('type').text
             logging.debug("objective: {} found with type {}".format(o_name, o_type))
             # TESTING ONLY - TO DO ELIMINATE THIS NEXT LINE
+            # This will need to be a user supplied dose level.
             if o.find('dose').attrib['units'] == '%':
                 s_dose = '50'
             else:

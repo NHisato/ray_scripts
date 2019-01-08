@@ -276,7 +276,9 @@ def main():
             required=['i'])
         # Launch the dialog
         response = input_dialog.show()
+        # Close on cancel
         if response == {}:
+            logging.info('User cancelled create goals script.')
             status.finish('create goals was cancelled')
             sys.exit('create goals was cancelled')
         # Link root to selected protocol ElementTree
@@ -298,7 +300,12 @@ def main():
                 options={'i': order_list},
                 required=['i'])
             # Launch the dialog
-            print input_dialog.show()
+            response = input_dialog.show()
+            # Close on cancel
+            if response == {}:
+                logging.info('User cancelled create goals script.')
+                status.finish('create goals was cancelled')
+                sys.exit('create goals was cancelled')
             # Link root to selected protocol ElementTree
             logging.info("Order selected: {}".format(
                 input_dialog.values['i']))
@@ -425,7 +432,12 @@ def main():
             initial=target_initial,
             options=target_options,
             required=[])
-        print target_dialog.show()
+        # Close on cancel
+        response = target_dialog.show()
+        if response == {}:
+            logging.info('User cancelled create goals script.')
+            status.finish('create goals was cancelled')
+            sys.exit('create goals was cancelled')
 
         # Process inputs
         # Make a dict with key = name from elementTree : [ Name from ROIs, Dose in Gy]
