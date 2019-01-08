@@ -182,11 +182,11 @@ def add_objective(obj, case, plan, beamset,
     IndexNotFound = True
     while IndexNotFound:
         for OptIndex, opts in enumerate(plan.PlanOptimizations):
-            if beamset.DicomPlanLabel in opts.OptimizedBeamSets.DicomPlanLabel:
-                logging.debug("Key found: {}".format(OptIndex))
+            try:
+                opts[beamset.DicomPlanLabel]
                 IndexNotFound = False
-            else:
-                logging.debug("Key not found in OptIndex: {}".format(OptIndex))
+            except KeyError:
+                logging.debug("Keep on keeping on")
     OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
     IndexNotFound = True
     # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
