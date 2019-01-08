@@ -184,16 +184,9 @@ def add_objective(obj, case, plan, beamset,
             opts.OptimizedBeamSets[beamset.DicomPlanLabel]
             indices.append(OptIndex)
         except InvalidOperationException:
-            template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-            message = template.format(type(ex).__name__, ex.args)
-            logging.debug(message)
-    if len(indices) > 1:
-        logging.warning("Beamset has multiple optimizations, cannot proceed")
-        sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
-    elif len(indices) == 0:
-        logging.warning(" Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
-        sys.exit("Could not find beamset optimization")
-    else:
+            pass
+    # Ensure we have a unique match or exit
+    if len(indices) == 1:
         # Found our index.  We will use a shorthand for the remainder of the code
         OptIndex = indices[0]
         OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
@@ -202,6 +195,13 @@ def add_objective(obj, case, plan, beamset,
         logging.debug(
             'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
                 OptIndex, OptName))
+    elif len(indices) == 0:
+        logging.warning("Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
+        sys.exit("Could not find beamset optimization")
+    elif len(indices) > 1:
+        logging.warning("Beamset has multiple optimizations, cannot proceed")
+        sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
+
     # IndexNotFound = True
     # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
     # Because the key to the OptimizedBeamSets presupposes the user knows the PlanOptimizations index
