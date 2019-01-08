@@ -183,6 +183,7 @@ def add_objective(obj, case, plan, beamset,
         try:
             opts.OptimizedBeamSets[beamset.DicomPlanLabel]
             indices.append(OptIndex)
+        #Not sure of error type
         except ValueError:
             pass
     # Ensure we have a unique match or exit
