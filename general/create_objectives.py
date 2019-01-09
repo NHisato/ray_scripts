@@ -10,6 +10,7 @@ import logging
 import datetime
 import xml.etree.ElementTree
 import connect
+import Objectives
 
 
 def select_objectives(folder=None, filename=None):
@@ -177,7 +178,7 @@ def add_objective(obj, case, plan, beamset,
     # UniformDose: Dose, Weight, % Volume=30?
     # UniformityConstraint?
 
-    # Find current Beamset Number and determine plan optimization
+    # Find current BeamSet Number and determine plan optimization
     indices = []
     for OptIndex, opts in enumerate(plan.PlanOptimizations):
         try:
@@ -189,12 +190,7 @@ def add_objective(obj, case, plan, beamset,
     if len(indices) == 1:
         # Found our index.  We will use a shorthand for the remainder of the code
         OptIndex = indices[0]
-        # OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
         plan_optimization = plan.PlanOptimizations[OptIndex]
-        # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
-        # logging.debug(
-        #     'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
-        #         OptIndex, OptName))
     elif len(indices) == 0:
         logging.warning("Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
         sys.exit("Could not find beamset optimization")
@@ -202,30 +198,6 @@ def add_objective(obj, case, plan, beamset,
         logging.warning("Beamset has multiple optimizations, cannot proceed")
         sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
 
-    # IndexNotFound = True
-    # In RS, OptimizedBeamSets objects are keyed using the DicomPlanLabel, or Beam Set name.
-    # Because the key to the OptimizedBeamSets presupposes the user knows the PlanOptimizations index
-    # this while loop looks for the PlanOptimizations index needed below by searching for a key
-    # that matches the BeamSet DicomPlanLabel
-    # This can likely be replaced with a list comprehension
-    # OptIndex = 0
-    # while IndexNotFound:
-    #     try:
-    #         OptName = plan.PlanOptimizations[OptIndex].OptimizedBeamSets[beamset.DicomPlanLabel].DicomPlanLabel
-    #         IndexNotFound = False
-    #     except Exception:
-    #         IndexNotFound = True
-    #         OptIndex += 1
-    # if IndexNotFound:
-    #     logging.warning(" Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
-    #     sys.exit("Could not find beamset optimization")
-    # else:
-    #     # Found our index.  We will use a shorthand for the remainder of the code
-    #     plan_optimization = plan.PlanOptimizations[OptIndex]
-    #     # plan_optimization_parameters = plan.PlanOptimizations[OptIndex].OptimizationParameters
-    #     logging.debug(
-    #         'Adding objective to plan.PlanOptimization[{}] for beamset {}'.format(
-    #             OptIndex, OptName))
     # Add the objective
     try:
         o = plan_optimization.AddOptimizationFunction(FunctionType=function_type,
@@ -299,14 +271,14 @@ def main():
             else:
                 s_dose = None
 
-            add_objective(o,
-                          case=case,
-                          plan=plan,
-                          beamset=beamset,
-                          s_roi=None,
-                          s_dose=s_dose,
-                          s_weight=None,
-                          restrict_beamset=None)
+            Objectives.add_objective_boom(o,
+                                          case=case,
+                                          plan=plan,
+                                          beamset=beamset,
+                                          s_roi=None,
+                                          s_dose=s_dose,
+                                          s_weight=None,
+                                          restrict_beamset=None)
     else:
         logging.debug('Could not find objective set using tree = {}'.format(tree))
     # for o in objs.findall('objectiveset'):
