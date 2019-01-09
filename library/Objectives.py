@@ -42,7 +42,7 @@ def find_optimization_index(plan, beamset):
     return OptIndex
 
 
-def select_objectives_boom(folder=None, filename=None):
+def select_objectives(folder=None, filename=None):
     """
 
     :param filename: os joined protocol name
@@ -61,7 +61,7 @@ def select_objectives_boom(folder=None, filename=None):
     return tree
 
 
-def add_objective_boom(obj, case, plan, beamset,
+def add_objective(obj, case, plan, beamset,
                   s_roi=None, s_dose=None,
                   s_weight=None, restrict_beamset=None):
     """
