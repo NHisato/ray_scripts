@@ -12,6 +12,36 @@ import xml.etree.ElementTree
 import connect
 
 
+def find_optimization_index(plan, beamset):
+    """
+
+    :param case: current case
+    :param plan: current plan
+    :param beamset: current beamset
+    :return: OptIndex: index of the optimization used by the current beamset
+    """
+    # Find current BeamSet Number and determine plan optimization
+    indices = []
+    for OptIndex, opts in enumerate(plan.PlanOptimizations):
+        try:
+            opts.OptimizedBeamSets[beamset.DicomPlanLabel]
+            indices.append(OptIndex)
+        except:
+            pass
+    # Ensure we have a unique match or exit
+    if len(indices) == 1:
+        # Found our index.  We will use a shorthand for the remainder of the code
+        OptIndex = indices[0]
+        plan_optimization = plan.PlanOptimizations[OptIndex]
+    elif len(indices) == 0:
+        logging.warning("Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
+        sys.exit("Could not find beamset optimization")
+    elif len(indices) > 1:
+        logging.warning("Beamset has multiple optimizations, cannot proceed")
+        sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
+    return OptIndex
+
+
 def select_objectives_boom(folder=None, filename=None):
     """
 
@@ -175,25 +205,27 @@ def add_objective_boom(obj, case, plan, beamset,
     # UniformDose: Dose, Weight, % Volume=30?
     # UniformityConstraint?
 
+    OptIndex = find_optimization_index(plan=plan,beamset=beamset)
+    plan_optimization = plan.PlanOptimizations[OptIndex]
     # Find current BeamSet Number and determine plan optimization
-    indices = []
-    for OptIndex, opts in enumerate(plan.PlanOptimizations):
-        try:
-            opts.OptimizedBeamSets[beamset.DicomPlanLabel]
-            indices.append(OptIndex)
-        except:
-            pass
-    # Ensure we have a unique match or exit
-    if len(indices) == 1:
-        # Found our index.  We will use a shorthand for the remainder of the code
-        OptIndex = indices[0]
-        plan_optimization = plan.PlanOptimizations[OptIndex]
-    elif len(indices) == 0:
-        logging.warning("Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
-        sys.exit("Could not find beamset optimization")
-    elif len(indices) > 1:
-        logging.warning("Beamset has multiple optimizations, cannot proceed")
-        sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
+    # indices = []
+    # for OptIndex, opts in enumerate(plan.PlanOptimizations):
+    #     try:
+    #         opts.OptimizedBeamSets[beamset.DicomPlanLabel]
+    #         indices.append(OptIndex)
+    #     except:
+    #         pass
+    # # Ensure we have a unique match or exit
+    # if len(indices) == 1:
+    #     # Found our index.  We will use a shorthand for the remainder of the code
+    #     OptIndex = indices[0]
+    #     plan_optimization = plan.PlanOptimizations[OptIndex]
+    # elif len(indices) == 0:
+    #     logging.warning("Beamset optimization for {} could not be found.".format(beamset.DicomPlanLabel))
+    #     sys.exit("Could not find beamset optimization")
+    # elif len(indices) > 1:
+    #     logging.warning("Beamset has multiple optimizations, cannot proceed")
+    #     sys.exit("Multiple beamset optimizations found in current plan.Cannot proceed")
 
     # Add the objective
     try:
