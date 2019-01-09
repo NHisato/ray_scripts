@@ -12,7 +12,7 @@ import xml.etree.ElementTree
 import connect
 
 
-def select_objectives(folder=None,filename=None):
+def select_objectives_boom(folder=None, filename=None):
     """
 
     :param filename: os joined protocol name
@@ -25,6 +25,7 @@ def select_objectives(folder=None,filename=None):
         # Search protocol list, parsing each XML file for protocols and goalsets
         logging.debug('Searching folder {} for protocols, goal sets'.format(folder))
         for f in os.listdir(folder):
+            # This guy should prompt the user to find the appropriate file
             if f.endswith('.xml'):
                 tree = xml.etree.ElementTree.parse(os.path.join(folder, f))
     return tree
