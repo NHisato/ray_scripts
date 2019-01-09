@@ -244,7 +244,7 @@ def main():
     institution_folder = r'UW'
     file = 'planning_structs_conventional.xml'
     path_protocols = os.path.join(os.path.dirname(__file__), protocol_folder, institution_folder, file)
-    tree = Objectives.select_objectives_boom(filename=path_protocols)
+    tree = Objectives.select_objectives(filename=path_protocols)
     logging.debug("selected file {}".format(path_protocols))
     # TODO::
     # Extend this for multiple objective sets found within a file
@@ -268,7 +268,7 @@ def main():
             else:
                 s_dose = None
 
-            Objectives.add_objective_boom(o,
+            Objectives.add_objective(o,
                                           case=case,
                                           plan=plan,
                                           beamset=beamset,
