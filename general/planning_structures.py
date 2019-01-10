@@ -394,7 +394,11 @@ def main():
         required=['1'] #, Not Yet'2']
 
     )
-    print dialog1.show()
+    response = dialog1.show()
+    if response == {}:
+        logging.info('User cancelled create goals script.')
+        status.finish('create goals was cancelled')
+        sys.exit('create goals was cancelled')
 
     # Find all the target names and generate the potential dropdown list for the cases
     # Use the above list for Uniform Structure Choices and Underdose choices, then
@@ -468,7 +472,11 @@ def main():
         options=t_o,
         required=t_r
     )
-    print initial_dialog.show()
+    response = initial_dialog.show()
+    if response == {}:
+        logging.info('User cancelled create goals script.')
+        status.finish('create goals was cancelled')
+        sys.exit('create goals was cancelled')
 
     # Parse the output from initial_dialog
     # We are going to take a user input input_source_list and convert them into PTV's used for planning
@@ -509,7 +517,11 @@ def main():
                 'input2_underdose': AllOars,
                 'input3_underdose': AllOars},
             required=[])
-        print under_dose_dialog.show()
+        response =  under_dose_dialog.show()
+        if response == {}:
+            logging.info('User cancelled create goals script.')
+            status.finish('create goals was cancelled')
+            sys.exit('create goals was cancelled')
         underdose_structures = []
         try:
             underdose_structures.extend(under_dose_dialog.values['input1_underdose'])
@@ -546,7 +558,11 @@ def main():
                 'input2_uniform': AllOars,
                 'input3_uniform': AllOars},
             required=[])
-        print uniformdose_dialog.show()
+        response = uniformdose_dialog.show()
+        if response == {}:
+            logging.info('User cancelled create goals script.')
+            status.finish('create goals was cancelled')
+            sys.exit('create goals was cancelled')
         uniformdose_structures = []
         try:
             uniformdose_structures.extend(uniformdose_dialog.values['input1_uniform'])
@@ -587,7 +603,11 @@ def main():
             'input3_skintarget': ['Preserve Skin Dose'],
             'input4_targetrings': ['Use target-specific rings']},
         required=[])
-    print options_dialog.show()
+    response = options_dialog.show()
+    if response == {}:
+        logging.info('User cancelled create goals script.')
+        status.finish('create goals was cancelled')
+        sys.exit('create goals was cancelled')
 
     # Determine if targets using the skin are in place
     try:

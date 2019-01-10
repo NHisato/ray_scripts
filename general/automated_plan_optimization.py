@@ -637,6 +637,7 @@ def optimize_plan(patient, case, plan, beamset, **optimization_inputs):
             plan_optimization_parameters.Algorithm.MaxNumberOfIterations = second_maximum_iteration
             plan_optimization_parameters.DoseCalculation.IterationsInPreparationsPhase = second_intermediate_iteration
             # Outputs for debug
+            # TODO: this step will need to be put in a "try" because the robustness does not allow it
             current_objective_function = plan_optimization.Objective.FunctionValue.FunctionValue
             logging.info(
                 'optimize_plan: At iteration {} total objective function is {}, compared to previous {}'.format(
