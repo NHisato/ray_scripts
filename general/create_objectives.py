@@ -13,6 +13,34 @@ import connect
 import Objectives
 
 
+def select_objective_protocol():
+    """
+
+    :return: tree: Elementtree with user-selected objectives loaded
+    """
+    objective_folder = r'../objectives'
+    institution_folder = r'UW'
+    path_objectives = os.path.join(os.path.dirname(__file__), objective_folder, institution_folder)
+    tpo = UserInterface.TpoDialog()
+    tpo.load_protocols(path_objectives)
+    input_dialog = UserInterface.InputDialog(
+        inputs={'i': 'Select Objective Set'},
+        title='Objective Selection',
+        datatype={'i': 'combo'},
+        initial={},
+        options={'i': list(tpo.protocols.keys())},
+        required=['i'])
+    response = input_dialog.show()
+    # Close on cancel
+    if response == {}:
+        logging.info('create_objective cancelled by user')
+        status.finish('User cancelled create objective creation.')
+        sys.exit('create_objective cancelled by user')
+    logging.debug('user selected {}').format(input_dialog.values['i'])
+    tree = Objectives.select_objectives(input_dialog.values['i'])
+    return tree
+
+
 def main():
     """ Temp chunk of code to try to open an xml file"""
     try:
@@ -29,6 +57,7 @@ def main():
     file = 'planning_structs_conventional.xml'
     path_protocols = os.path.join(os.path.dirname(__file__), protocol_folder, institution_folder, file)
     tree = Objectives.select_objectives(filename=path_protocols)
+    tree = select_objective_protocol()
     logging.debug("selected file {}".format(path_protocols))
     # TODO::
     # Extend this for multiple objective sets found within a file

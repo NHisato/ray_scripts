@@ -162,6 +162,7 @@ def conditional_overlap(structure_name, goal_volume, case, exam, comp_structure,
     :param exam:
     :param comp_structure:
     """
+    # TODO:: Evaluate the overlap between two structures and return a modified goal and volume
 
 
 def knowledge_based_goal(structure_name, goal_type, case, exam,
@@ -457,6 +458,7 @@ def main():
                     if nominal_dose == 0:
                         # Set a nominal dose to the first matched pair
                         nominal_dose = protocol_match[pd]
+
 
         status.next_step(text="Adding goals.", num=3)
         # Iterate over goals in orders and protocols
