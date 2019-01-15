@@ -16,6 +16,7 @@ import UserInterface
 
 def select_objective_protocol():
     """
+    # Double commit blues
     Prompt user to select the objective xml file they want to use
     :return: tree: Elementtree with user-selected objectives loaded
     """
