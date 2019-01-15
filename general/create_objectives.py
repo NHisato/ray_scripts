@@ -11,6 +11,7 @@ import datetime
 import xml.etree.ElementTree
 import connect
 import Objectives
+import UserInterface
 
 
 def select_objective_protocol():
