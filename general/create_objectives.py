@@ -54,7 +54,7 @@ def select_objective_protocol():
     # Close on cancel
     if response == {}:
         logging.info('create_objective cancelled by user')
-        status.finish('User cancelled create objective creation.')
+        # status.finish('User cancelled create objective creation.')
         sys.exit('create_objective cancelled by user')
     logging.debug('user selected {}').format(input_dialog.values['i'])
     tree = Objectives.select_objectives(input_dialog.values['i'])
