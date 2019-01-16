@@ -42,6 +42,7 @@ def select_objective_protocol():
                     objective_sets[n] = tree.getroot()
             # tpo = UserInterface.TpoDialog()
             # tpo.load_protocols(path_objectives)
+    # Augment the list to include all xml files found with an "objectiveset" tag in name
 
     input_dialog = UserInterface.InputDialog(
         inputs={'i': 'Select Objective Set'},
