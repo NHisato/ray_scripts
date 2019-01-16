@@ -26,14 +26,25 @@ def select_objective_protocol():
                                    protocol_folder,
                                    institution_folder,
                                    objective_folder)
-    tpo = UserInterface.TpoDialog()
-    tpo.load_protocols(path_objectives)
+    tree = xml.etree.ElementTree.parse(path_objectives)
+    objective_sets = {}
+    if tree.getroot().tag == 'objectiveset':
+        logging.debug("parsing xml: {}".format(f))
+        n = tree.find('name').text
+        logging.debug('Found objectiveset {} in {}'.format(n, f))
+        if n in self.protocols:
+            objective_sets[n].extend(tree.getroot())
+        else:
+            objective_sets[n] = tree.getroot()
+    # tpo = UserInterface.TpoDialog()
+    # tpo.load_protocols(path_objectives)
+
     input_dialog = UserInterface.InputDialog(
         inputs={'i': 'Select Objective Set'},
         title='Objective Selection',
         datatype={'i': 'combo'},
         initial={},
-        options={'i': list(tpo.protocols.keys())},
+        options={'i': list(objective_sets.keys())},
         required=['i'])
     response = input_dialog.show()
     # Close on cancel
