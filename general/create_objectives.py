@@ -22,6 +22,7 @@ def select_objective_protocol():
     protocol_folder = r'../protocols'
     objective_folder = r'objectives'
     institution_folder = r'UW'
+    # os join autoresolves the path
     path_objectives = os.path.join(os.path.dirname(__file__),
                                    protocol_folder,
                                    institution_folder,
