@@ -33,9 +33,7 @@ def select_objective_protocol():
             tree = xml.etree.ElementTree.parse(os.path.join(path_objectives, f))
             objective_sets = {}
             if tree.getroot().tag == 'objectiveset':
-                logging.debug("parsing xml: {}".format(f))
                 n = tree.find('name').text
-                logging.debug('name is {}'.format(n))
                 logging.debug('Found objectiveset {} in {}'.format(n, f))
                 # Debugging fun
                 if n in objective_sets:
@@ -43,6 +41,8 @@ def select_objective_protocol():
                 else:
                     objective_sets[n] = tree.getroot()
     # Augment the list to include all xml files found with an "objectiveset" tag in name
+    for k in objective_sets:
+        logging.debug('objective sets to choose from are {}'.format(k, objective_sets[k]))
     input_dialog = UserInterface.InputDialog(
         inputs={'i': 'Select Objective Set'},
         title='Objective Selection',
