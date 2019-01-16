@@ -26,6 +26,7 @@ def select_objective_protocol():
                                    protocol_folder,
                                    institution_folder,
                                    objective_folder)
+    # Review specified directory for any objectiveset tags
     logging.debug('Searching folder {} for objectivesets'.format(path_objectives))
     for f in os.listdir(folder):
         if f.endswith('.xml'):
