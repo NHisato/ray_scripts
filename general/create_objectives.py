@@ -20,13 +20,11 @@ def select_objective_protocol():
     :return: tree: Elementtree with user-selected objectives loaded
     """
     protocol_folder = r'../protocols'
-    objective_folder = r'objectives'
     institution_folder = r'UW'
     # os join autoresolves the path
     path_objectives = os.path.join(os.path.dirname(__file__),
                                    protocol_folder,
-                                   institution_folder,
-                                   objective_folder)
+                                   institution_folder)
     # Review specified directory for any objectiveset tags
     logging.debug('Searching folder {} for objectivesets'.format(path_objectives))
     for f in os.listdir(path_objectives):
