@@ -36,7 +36,7 @@ def select_objective_protocol():
                 logging.debug("parsing xml: {}".format(f))
                 n = tree.find('name').text
                 logging.debug('Found objectiveset {} in {}'.format(n, f))
-                if n in self.protocols:
+                if n in objective_sets:
                     objective_sets[n].extend(tree.getroot())
                 else:
                     objective_sets[n] = tree.getroot()
