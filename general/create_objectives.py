@@ -29,7 +29,7 @@ def select_objective_protocol():
     logging.debug('Searching folder {} for objectivesets'.format(path_objectives))
     for f in os.listdir(path_objectives):
         if f.endswith('.xml'):
-            tree = xml.etree.ElementTree.parse(path_objectives)
+            tree = xml.etree.ElementTree.parse(os.path.join(path_objectives, f))
             objective_sets = {}
             if tree.getroot().tag == 'objectiveset':
                 logging.debug("parsing xml: {}".format(f))
