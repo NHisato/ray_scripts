@@ -32,6 +32,7 @@ def select_objective_protocol():
         if f.endswith('.xml'):
             tree = xml.etree.ElementTree.parse(os.path.join(path_objectives, f))
             objective_sets = {}
+            logging.debug("Root tag is {}".format(tree.getroot().tag))
             if tree.getroot().tag == 'objectiveset':
                 logging.debug("parsing xml: {}".format(f))
                 n = tree.find('name').text
