@@ -1,5 +1,5 @@
 <protocol>
-    <name>UW Anorectal</name>
+    <name>UW Abdomen</name>
     <ct>
         <protocol institution="Johnson Creek">8.1 XRT ABDOMEN</protocol>
         <protocol institution="East">8.2 Abdomen without contrast 0.8sec</protocol>
